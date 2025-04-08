@@ -15,7 +15,7 @@ runs:
         distribution: 'adopt'
         
     - name: Install dependencies
-      run: mvn install
+      run: mvn clean install -X
       shell: bash
 
     - name: Build with Maven
