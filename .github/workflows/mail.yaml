@@ -20,6 +20,8 @@ jobs:
         uses: ./.github/actions/build
         with:
           java-version: '17'
+          SETTING_KEY: ${{ secrets.SETTING_KEY }}
+          USER: ${{ secrets.USER }}
 
       - name: Run Unit Tests
         uses: ./.github/actions/coverage
