@@ -17,7 +17,7 @@
         </repository>
         <repository>
           <id>github</id>
-          <url>https://maven.pkg.github.com/NTT-DATA-Demo-LATAM/DEVSECOPS_WF_MIC</url>
+          <url>https://maven.pkg.github.com/Cady-Contreras-NTT/APP_MICRO</url>
           <snapshots>
             <enabled>true</enabled>
           </snapshots>
