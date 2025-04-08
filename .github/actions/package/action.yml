@@ -1,0 +1,36 @@
+name: 'Upload Packages to GitHub'
+description: 'Uploads packages to GitHub Packages'
+inputs:
+  java-version:
+    description: 'Java version to use'
+    required: true
+    default: '17'
+  SETTING_KEY:
+    description: 'SETTING_KEY for authentication'
+    required: true
+  USER:
+    description: 'GitHub username for authentication'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: 'adopt'
+
+    - name: Copy and replace settings.xml
+      run: |
+        mkdir -p ~/.m2
+        sed -i "s/USER/$USER/g" $GITHUB_WORKSPACE/.github/actions/package/settings.xml
+        sed -i "s/SETTING_KEY/$SETTING_KEY/g" $GITHUB_WORKSPACE/.github/actions/package/settings.xml
+        cp $GITHUB_WORKSPACE/.github/actions/package/settings.xml ~/.m2/settings.xml
+      shell: bash
+      env:
+        USER: ${{ inputs.USER }}
+        SETTING_KEY: ${{ inputs.SETTING_KEY }}
+
+    - name: Publish package
+      run: mvn deploy
+      shell: bash

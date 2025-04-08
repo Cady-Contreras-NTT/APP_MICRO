@@ -1,0 +1,31 @@
+name: 'Build Microservice'
+description: 'Builds the Quarkus microservice'
+inputs:
+  java-version:
+    description: 'Java version to use'
+    required: true
+    default: '17'
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: 'adopt'
+        
+    - name: Cache local Maven repository
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2/repository
+        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
+    - name: Install dependencies
+      run: mvn clean install -U
+      shell: bash
+
+    - name: Build with Maven
+      run: mvn clean package -Dnative
+      shell: bash

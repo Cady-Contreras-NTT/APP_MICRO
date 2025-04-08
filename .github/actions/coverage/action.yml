@@ -1,0 +1,19 @@
+name: 'Run Unit Tests'
+description: 'Runs unit tests for the Quarkus microservice'
+inputs:
+  java-version:
+    description: 'Java version to use'
+    required: true
+    default: '17'
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ inputs.java-version }}
+        distribution: 'adopt'
+
+    - name: Run unit tests
+      run: mvn test
+      shell: bash
