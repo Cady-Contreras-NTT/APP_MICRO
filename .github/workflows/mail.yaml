@@ -16,13 +16,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Upload Packages to GitHub
-        uses: ./.github/actions/package
-        with: 
-          java-version: '17'
-          SETTING_KEY: ${{ secrets.SETTING_KEY }}
-          USER: ${{ secrets.USER }}
-
       - name: Build Microservice
         uses: ./.github/actions/build
         with:
